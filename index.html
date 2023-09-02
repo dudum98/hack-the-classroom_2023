@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EssayPro</title>
+    <link rel="stylesheet" href="{{ ('static', filename='css/style.css') }}">
+</head>
+
+</head>
+<body>
+    <h1>EssayPro</h1>
+    <form action="/grade" method="POST">
+        <label for="essay_text">Enter your essay:</label><br>
+        <textarea id="essay_text" name="essay_text" rows="10" cols="50"></textarea><br>
+        <input type="submit" value="Grade Essay">
+    </form>
+</body>
+</html>
+
