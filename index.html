@@ -1,19 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>EssayPro</title>
-    <link rel="stylesheet" href="{{ ('static', filename='css/style.css') }}">
-</head>
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>EssayPro</h1>
-    <form action="/grade" method="POST">
+    <h1>Essay Grader</h1>
+
+    <!-- Essay Submission Form -->
+    <form id="essayForm" action="/grade" method="POST">
         <label for="essay_text">Enter your essay:</label><br>
-        <textarea id="essay_text" name="essay_text" rows="10" cols="50"></textarea><br>
+        <textarea id="essay_text" name="essay_text" rows="10" cols="50" required></textarea><br>
         <input type="submit" value="Grade Essay">
     </form>
+
+    <!-- Grading Result (Initially Hidden) -->
+    <div id="resultDiv" style="display: none;">
+        <h2>Grading Result:</h2>
+        <p id="result"></p>
+    </div>
+
+    <!-- JavaScript to Toggle Result Visibility -->
+    <script>
+        const essayForm = document.getElementById("essayForm");
+        const resultDiv = document.getElementById("resultDiv");
+        const resultParagraph = document.getElementById("result");
+
+        essayForm.addEventListener("submit", async function (e) {
+            e.preventDefault(); // Prevent the form from submitting normally
+
+            // Send the form data to the server via AJAX (you may need to modify this part)
+            const formData = new FormData(essayForm);
+            const response = await fetch("/grade", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                // If the response is successful, show the result
+                const data = await response.text();
+                resultParagraph.textContent = data;
+                resultDiv.style.display = "block"; // Display the result div
+            } else {
+                // Handle error if needed
+                console.error("Error grading essay");
+            }
+        });
+    </script>
 </body>
 </html>
+
 
