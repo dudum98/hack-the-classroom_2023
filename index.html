@@ -1,54 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>EssayPro</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Roboto+Mono:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Essay Grader</h1>
-
-    <!-- Essay Submission Form -->
-    <form id="essayForm" action="/grade" method="POST">
-        <label for="essay_text">Enter your essay:</label><br>
-        <textarea id="essay_text" name="essay_text" rows="10" cols="50" required></textarea><br>
-        <input type="submit" value="Grade Essay">
-    </form>
-
-    <!-- Grading Result (Initially Hidden) -->
-    <div id="resultDiv" style="display: none;">
-        <h2>Grading Result:</h2>
-        <p id="result"></p>
+    <div id="heading">
+        <h1>EssayPro</h1>
+    </div>
+    <div id="container">
+        <div id="intro">
+            <p id="intro-text">Feeling like this?</p>
+            <img id="spongebob" src="https://media.tenor.com/LiDD5Bl5AXEAAAAd/spongebob-the.gif" width='700px' height='auto' alt="spongebob"></img>
+        </div>
+        <div id="sub-section">
+            <p id="subtext">Then you've come to the right place!</p>
+        </div>
+        <div id="form_section">
+            <p id="subheading">Enter your essay below:</p>
+           <form action="/grade" method="POST">
+            <textarea id="essay_text" name="essay_text" rows="10" cols="50"></textarea><br>
+            <input id="submit_button" type="submit" value="Grade Essay">
+           </form>
+        </div>
     </div>
 
-    <!-- JavaScript to Toggle Result Visibility -->
-    <script>
-        const essayForm = document.getElementById("essayForm");
-        const resultDiv = document.getElementById("resultDiv");
-        const resultParagraph = document.getElementById("result");
 
-        essayForm.addEventListener("submit", async function (e) {
-            e.preventDefault(); // Prevent the form from submitting normally
 
-            // Send the form data to the server via AJAX (you may need to modify this part)
-            const formData = new FormData(essayForm);
-            const response = await fetch("/grade", {
-                method: "POST",
-                body: formData,
-            });
-
-            if (response.ok) {
-                // If the response is successful, show the result
-                const data = await response.text();
-                resultParagraph.textContent = data;
-                resultDiv.style.display = "block"; // Display the result div
-            } else {
-                // Handle error if needed
-                console.error("Error grading essay");
-            }
-        });
-    </script>
 </body>
 </html>
-
-
